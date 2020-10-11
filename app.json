@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index.wxml",
+    "pages/components/userInfo/myInfo",
+    "pages/components/direction/direction",
+    "pages/components/shout/shout",
+    "pages/components/grit/grit"
+  ],
+  "window": {
+    "navigationBarTitleText": "Lemon ocean",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "tabBar": {
+    "backgroundColor": "#FFE4C4",
+    "list": [
+      {
+        "pagePath": "pages/components/direction/direction",
+        "text": "Direction",
+        "iconPath": "/static/icon/Safety.png",
+        "selectedIconPath": "/static/icon/Safety.png"
+      },
+      {
+        "pagePath": "pages/components/userInfo/myInfo",
+        "text": "我的信息",
+        "iconPath": "/static/icon/my.png",
+        "selectedIconPath": "/static/icon/my.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap18.json"
+}

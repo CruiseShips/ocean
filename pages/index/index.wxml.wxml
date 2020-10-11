@@ -1,0 +1,9 @@
+<!--pages/index/index.wxml.wxml-->
+<view class="index">
+    <image src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../static/logo.png'}}" class="index_image"></image>
+    <text class="index_text">{{userInfo.nickName?'Hello '+ userInfo.nickName:'Hello Lemon'}}</text>
+    
+    <view style="display: {{userInfo.nickName?'none':'block'}}">
+        <button class="index_verify" open-type="getUserInfo" bindgetuserinfo="verifyIdentity">开始旅程</button>
+    </view>
+</view>

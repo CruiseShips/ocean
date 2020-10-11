@@ -1,0 +1,35 @@
+/* pages/index/index.wxml.wxss */
+page{
+    height: 100%;
+    /* background-color: gold; */
+    background: linear-gradient(to bottom, gold ,#F35C70);
+}
+.index{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.index_image{
+    border-radius: 40rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin-top: 40%;
+}
+.index_text {
+    font-size: 32rpx;
+    font-weight: bold;
+    margin: 100rpx 0;
+}
+.index_verify{
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+}

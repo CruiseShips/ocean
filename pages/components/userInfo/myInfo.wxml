@@ -1,0 +1,36 @@
+<!--pages/components/userInfo/myInfo.wxml-->
+<div>
+  <view class="my_index">
+    <image src="{{userInfo.avatarUrl}}" class="my_image"></image>
+    <text class="my_name">{{userInfo.nickName}}</text>
+  </view>
+</div>
+
+<!-- body设计 -->
+<div class="body">
+  <div class="weui-flex">
+    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="getTop10">
+      <p>查看最近询问记录</p>
+    </div>
+  </div>
+  <div class="weui-flex">
+    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="createGrit">
+      <p>创建提示</p>
+    </div>
+  </div>
+  <div class="weui-flex">
+    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="getMyGit">
+      <p>查看我贡献的提示</p>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="weui-footer">
+    <p class="weui-footer__text">Copyright © 2020 lemon1234.com</p>
+  </div>
+</div>
+
+<modal id="modal" hidden="{{hiddenmodalput}}" title="添加提示" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+  提示内容: <input type='text' id="text" placeholder="提示审核通过，即可在系统随机看到哦~" auto-focus bindinput='formText' />
+</modal>

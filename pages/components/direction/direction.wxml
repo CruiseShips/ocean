@@ -1,0 +1,16 @@
+<view class="index">
+  <form bindsubmit="bindFormSubmit" class="direction_form">
+    <textarea class="direction_input" placeholder="快告诉我你困惑的事情吧~" name="problem" value="{{problem}}" />
+    <button class="direction_button" form-type="submit">GO</button>
+  </form>
+</view>
+<view class="foot">
+  <text class="direction_text">
+    玩法介绍：
+      1. 想你现在被困惑的事情
+      2. 闭上眼睛冷静三秒
+      3. 点击 GO ！
+  </text>
+</view>
+<p class="prompt">仅供娱乐，不可信以为真，只想博你一笑，愿你更好</p>
+<view style="margin-top:40rpx; font-size: 20rpx;">小程序自己制作，如果有美工大神可以联系我，代价</view>

@@ -1,0 +1,10 @@
+<!--pages/components/shout/shout.wxml-->
+<div class="weui-panel weui-panel_access" wx:for="{{shouts}}" wx:key="id" wx:for-item="shout">
+    <div class="weui-panel__bd">
+        <div class="weui-media-box__bd">
+            <h4 class="weui-media-box__title" style="background-color: #FFE4C4">{{shout.yyyymmdd}}</h4>
+            <p class="weui-media-box__desc" style="color: black;">Q: {{shout.text}}</p>
+            <p class="weui-media-box__desc" style="color: black;">回答: {{shout.grit}}</p>
+        </div>
+    </div>
+</div>

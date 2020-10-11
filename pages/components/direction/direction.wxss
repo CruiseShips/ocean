@@ -1,0 +1,39 @@
+/* pages/components/direction/direction.wxss */
+@import '../../../static/weui.wxss';
+page {
+  height: 100%;
+  /* background-color: gold; */
+  background: #FFE4C4;
+}
+.index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.direction_form {
+  width: 90%;
+  margin: 0 30rpx;
+  margin-top: 280rpx;
+}
+.direction_input {
+  width: 100%;
+  height: 300rpx;
+  margin: 20rpx auto;
+  border: 1rpx solid black;
+}
+.direction_button {
+  width: 300rpx;
+  height: auto;
+  font-size: 32rpx;
+  border-radius: 12px;
+  background-color: #4CAF50;
+}
+.direction_text {
+  font-size: 28rpx;
+}
+.foot{
+  margin: 20% 0 20rpx 20rpx;
+}
+.prompt {
+  margin-top: 50rpx;
+}

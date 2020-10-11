@@ -1,0 +1,10 @@
+<!--pages/components/shout/shout.wxml-->
+<view class="page">
+  <view class="page__hd" wx:for="{{grits}}" wx:key="id" wx:for-item="grit">
+    <view class="page__title">
+        {{grit.text}}
+        <p wx:if="{{grit.status == 0}}">审核状态: 未通过</p>
+        <p wx:if="{{grit.status == 1}}">审核状态: 通过</p>
+    </view>
+  </view>
+</view>
