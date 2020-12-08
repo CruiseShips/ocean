@@ -2,8 +2,7 @@
 @import '../../../static/weui.wxss';
 page {
   height: 100%;
-  /* background-color: gold; */
-  background: #FFE4C4;
+  background: #F0F8FF;
 }
 .index {
   display: flex;
@@ -20,20 +19,4 @@ page {
   height: 300rpx;
   margin: 20rpx auto;
   border: 1rpx solid black;
-}
-.direction_button {
-  width: 300rpx;
-  height: auto;
-  font-size: 32rpx;
-  border-radius: 12px;
-  background-color: #4CAF50;
-}
-.direction_text {
-  font-size: 28rpx;
-}
-.foot{
-  margin: 20% 0 20rpx 20rpx;
-}
-.prompt {
-  margin-top: 50rpx;
 }

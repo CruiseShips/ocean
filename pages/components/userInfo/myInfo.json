@@ -1,5 +1,5 @@
 {
-  "navigationBarBackgroundColor": "#FFE4C4",
-  "backgroundColorTop": "#FFE4C4",
-  "navigationBarTitleText": "我的信息"
+  "navigationBarBackgroundColor": "#F8F8FF",
+  "backgroundColorTop": "#F8F8FF",
+  "navigationStyle": "custom"
 }

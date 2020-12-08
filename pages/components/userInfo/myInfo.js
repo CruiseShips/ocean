@@ -9,8 +9,8 @@ Page({
    */
   data: {
     userInfo: '',
-    hiddenmodalput: true,
-    text: ''
+    text: '',
+    modalName: ''
   },
 
   /**
@@ -80,19 +80,6 @@ Page({
       url: '/pages/components/shout/shout'
     })
   },
-
-  createGrit() {
-    this.setData({
-      hiddenmodalput: !this.data.hiddenmodalput
-    })
-  },
-  
-  //取消按钮
-  cancel: function () {
-    this.setData({
-      hiddenmodalput: true
-    });
-  },
    
   //确认
   confirm: function () {
@@ -105,7 +92,7 @@ Page({
       })
       return;
     }
-    if(this.data.text.length > 5) {
+    if(this.data.text.length > 20) {
       wx.showToast({
         title: '提交内容太长，请简写',
         icon: 'none',
@@ -128,10 +115,9 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      timeout: 1000,
+      timeout: 2000,
       method: "POST",
       success: (data) => {
-        console.log(data)
         if(!data.data.success) {
           // 告诉他错误
           wx.showToast({
@@ -140,12 +126,21 @@ Page({
             duration: 2000
           })
         } else {
-          _that.cancel()
+          _that.hideModal()
           _that.setData({
             text: ''
           })
+          wx.showToast({
+            title: '添加成功，请等待审核',
+            icon: 'none',
+            duration: 2000
+          })
         }
       }
+    })
+
+    this.setData({
+      modalName: null
     })
   },
 
@@ -158,6 +153,20 @@ Page({
   getMyGit() {
     wx.navigateTo({
       url: '/pages/components/grit/grit'
+    })
+  },
+
+  showModal(e) {
+    this.setData({
+      text: ''
+    })
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
     })
   }
 

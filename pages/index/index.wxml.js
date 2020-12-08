@@ -32,19 +32,23 @@ Page({
         }
       })
     } else {
-      this.showText('登录失败，请关闭小程序从新登录1')
+      this.showText('登录失败，请关闭小程序从新登录')
     }
   },
 
   getUserInfo() {
+    const date = new Date();
+
     wx.getUserInfo({
       success: (data) => {
         this.setData({
           userInfo: data.userInfo
         })
         // 保存用户信息（每个月1号可以进行获取）
-        this.saveUserInfo(data.userInfo)
-
+        if(date.getDate() == 1) {
+          this.saveUserInfo(data.userInfo)
+        }
+        
         const timeout = setTimeout(function() {
           wx.switchTab({
             url: '/pages/components/direction/direction'
@@ -82,7 +86,7 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      timeout: 1000,
+      timeout: 2000,
       method: "POST",
       success: (data) => {
         
@@ -110,6 +114,8 @@ Page({
           success (res) {
             if(res.data == '') {
               _that.wxLogin(url)
+            } else {
+              _that.getUserInfo()
             }
           }
         });
@@ -132,7 +138,7 @@ Page({
         _that.getWxOpenId(url, code)
       },
       fail: (data) => {
-        _that.showText('登录失败，请关闭小程序从新登录2')
+        _that.showText('登录失败，请关闭小程序从新登录')
       }
     })
   },
@@ -148,7 +154,7 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      timeout: 1000,
+      timeout: 2000,
       method: "POST",
       success: (data) => {
         if(data.data.success) {
@@ -164,11 +170,11 @@ Page({
           // 判断是否有权限，然后进入
           _that.verifyIdentity()
         } else {
-          _that.showText('登录失败，请关闭小程序从新登录3')
+          _that.showText('登录失败，请关闭小程序从新登录')
         }
       },
       fail: (data) => {
-        _that.showText('登录失败，请关闭小程序从新登录4')
+        _that.showText('亲，请检查一下网络哦~~~')
       }
     })
   },

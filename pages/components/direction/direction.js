@@ -69,7 +69,7 @@ Page({
 
   bindFormSubmit: function (text) {
     const shout = text.detail.value.problem
-    console.log(shout)
+    
     if(shout == '' && shout.trim() == '') {
       wx.showToast({
         title: '请输入您困惑的疑问吧',
@@ -103,7 +103,7 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      timeout: 1000,
+      timeout: 2000,
       method: "POST",
       success: (data) => {
         let text = data.data.grit.text;

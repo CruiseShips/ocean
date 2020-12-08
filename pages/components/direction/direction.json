@@ -1,5 +1,5 @@
 {
-  "navigationBarBackgroundColor": "#FFE4C4",
-  "backgroundColorTop": "#FFE4C4",
-  "navigationBarTitleText": "Direction"
+  "navigationBarBackgroundColor": "#F0F8FF",
+  "backgroundColorTop": "#F0F8FF",
+  "navigationStyle": "custom"
 }

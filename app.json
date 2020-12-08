@@ -16,7 +16,7 @@
     "downloadFile": 10000
   },
   "tabBar": {
-    "backgroundColor": "#FFE4C4",
+    "backgroundColor": "#F0F8FF",
     "list": [
       {
         "pagePath": "pages/components/direction/direction",

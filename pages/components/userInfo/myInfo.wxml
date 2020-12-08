@@ -1,36 +1,60 @@
 <!--pages/components/userInfo/myInfo.wxml-->
-<div>
-  <view class="my_index">
-    <image src="{{userInfo.avatarUrl}}" class="my_image"></image>
-    <text class="my_name">{{userInfo.nickName}}</text>
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+    <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix"></image>
+    <view class="margin-top-sm">
+      <text>{{userInfo.nickName}}</text>
+    </view>
+    <image src="/static/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
-</div>
 
-<!-- body设计 -->
-<div class="body">
-  <div class="weui-flex">
-    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="getTop10">
-      <p>查看最近询问记录</p>
-    </div>
-  </div>
-  <div class="weui-flex">
-    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="createGrit">
-      <p>创建提示</p>
-    </div>
-  </div>
-  <div class="weui-flex">
-    <div class="weui-flex__item" style="padding: 20rpx;" bindtap="getMyGit">
-      <p>查看我贡献的提示</p>
-    </div>
-  </div>
-</div>
+  <!-- body设计 -->
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <view class="content" bindtap="getTop10">
+        <text class="cuIcon-card text-green"></text>
+        <text class="text-grey" bindtap="getTop10">查看最近询问记录</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <view class="content" bindtap="showModal" data-target="DialogModal1">
+        <text class="cuIcon-appreciatefill text-red"></text>
+        <!-- createGrit -->
+        <text class="text-grey" bindtap="showModal" data-target="DialogModal1">创建提示</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <view class="content" bindtap="getMyGit">
+        <text class="cuIcon-my text-orange"></text>
+        <text class="text-grey" bindtap="getMyGit">查看我贡献的提示</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content text-center">
+        <text class="text-grey">Copyright © 2020 lemon1234.com</text>
+      </view>
+    </view>
+  </view>
 
-<div class="foot">
-  <div class="weui-footer">
-    <p class="weui-footer__text">Copyright © 2020 lemon1234.com</p>
-  </div>
-</div>
+  <p class="weui-footer__text"></p>
+</scroll-view>
 
-<modal id="modal" hidden="{{hiddenmodalput}}" title="添加提示" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
-  提示内容: <input type='text' id="text" placeholder="提示审核通过，即可在系统随机看到哦~" auto-focus bindinput='formText' />
-</modal>
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">添加提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <textarea id="text" maxlength="-1" bindinput="formText" placeholder="提示审核通过，即可在系统随机看到哦~" value="{{text}}" auto-focus></textarea>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="confirm">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
