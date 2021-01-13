@@ -8,9 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-      userInfo: '',
-      canLogin: false,
-      openId: ''
+      userInfo: ''
   },
 
   // 判断是否授权
@@ -98,33 +96,49 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let _that = this
-    // 获取请求地址
-    const url = app.globalData.requestUrl['default'].url;
-    // https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.checkSession.html
-    // 检查登录状态是否过期
-    wx.checkSession({
-      success: (res) => {
-        _that.setData({
-          canLogin: true
-        })
-        // 判断是否存在openId 如果不存在需要再去拿一次
-        wx.getStorage({
-          key: 'openId',
-          success (res) {
-            if(res.data == '') {
-              _that.wxLogin(url)
-            } else {
-              _that.getUserInfo()
-            }
-          }
-        });
-      },
-      fail: (res) => {
-        // 如果失败就请求wx.login 从新登录
-        _that.wxLogin(url)
-      }
-    })
+
+    let _that = this;
+
+    const timeout = setTimeout(function() {
+      wx.switchTab({
+        url: '/pages/components/direction/direction'
+      })
+      clearTimeout(timeout);
+    }, 2000);
+
+    // const timing = setTimeout(function() {
+    //   wx.switchTab({
+    //     url: '/pages/components/direction/direction'
+    //   })
+    // }, 1500);
+
+    // let _that = this
+    // // 获取请求地址
+    // const url = app.globalData.requestUrl['default'].url;
+    // // https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.checkSession.html
+    // // 检查登录状态是否过期
+    // wx.checkSession({
+    //   success: (res) => {
+    //     _that.setData({
+    //       canLogin: true
+    //     })
+    //     // 判断是否存在openId 如果不存在需要再去拿一次
+    //     wx.getStorage({
+    //       key: 'openId',
+    //       success (res) {
+    //         if(res.data == '') {
+    //           _that.wxLogin(url)
+    //         } else {
+    //           _that.getUserInfo()
+    //         }
+    //       }
+    //     });
+    //   },
+    //   fail: (res) => {
+    //     // 如果失败就请求wx.login 从新登录
+    //     _that.wxLogin(url)
+    //   }
+    // })
   },
 
   // 微信登录

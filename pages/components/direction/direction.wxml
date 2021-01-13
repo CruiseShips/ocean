@@ -1,10 +1,11 @@
 <view class="index">
-  <form bindsubmit="bindFormSubmit" class="direction_form">
+  <form class="direction_form">
     <view class="cu-form-group margin-top">
       <textarea placeholder="快告诉我你困惑的事情吧~" name="problem" value="{{problem}}" />
 	  </view>
     <view class="padding flex flex-direction">
-      <button class="cu-btn bg-grey lg" form-type="submit">Go！</button>
+      <button class="cu-btn bg-grey lg" form-type="submit" open-type="getUserInfo" bindgetuserinfo="bindFormSubmit">Get 答案</button>
+      <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler"> Click me </button>
     </view>
   </form>
 </view>
