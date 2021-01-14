@@ -66,23 +66,44 @@ Page({
   onShareAppMessage: function () {
 
   },
-
-  verifyIdentity() {
+  
+  userInfoHandler(userInfo) {
+    let openId = wx.getStorageSync('openId');
     let _that = this;
+    if(openId == '' || openId == null) {
+      const url = app.globalData.requestUrl['default'].url;
 
-    // 检测是否授权
-    wx.getSetting({
-      success: (data) => {
-        wx.getUserInfo({
-          success: (data) => {
-            // 保存用户信息（每个月1号可以进行获取）
-            if(new Date().getDate() == 1) {
-              _that.saveUserInfo(data.userInfo);
-            }
-          }
+      if(userInfo.detail.userInfo == '' || userInfo.detail.userInfo == null || userInfo.detail.userInfo == undefined) {
+        
+      } else {
+        let data = userInfo.detail.userInfo;
+
+        wx.setStorageSync({
+          key:"userInfo",
+          data: data
         });
+
+        // 拿到授权，获取openId
+        wx.checkSession({
+          success: (res) => {
+            // 判断是否存在openId 如果不存在需要再去拿一次
+            wx.getStorage({
+              key: 'openId',
+              success (res) {
+                if(res.data == '') {
+                  _that.wxLogin(url)
+                }
+              }
+            });
+          },
+          fail: (res) => {
+            _that.wxLogin(url)
+          }
+        })
+
+        _that.saveUserInfo(data);
       }
-    });
+    }
   },
 
   // 微信登录
@@ -92,7 +113,7 @@ Page({
     wx.login({
       success: (data) => {
         // 获取到code
-        const code = data.code
+        const code = data.code;
         // 请求后端获取一下openId
         _that.getWxOpenId(url, code)
       },
@@ -123,8 +144,6 @@ Page({
             key: "openId",
             data: data.data.openId
           })
-          // 判断是否有权限
-          _that.verifyIdentity()
         } else {
           _that.showText('登录失败，请关闭小程序从新登录')
         }
@@ -136,9 +155,10 @@ Page({
   },
 
   saveUserInfo: function (userInfo) {
-    let _that = this
     let openId = wx.getStorageSync('openId');
+
     // 请求后端进行存储数据
+    const url = app.globalData.requestUrl['default'].url;
     wx.request({
       url: url + 'saveWxUserInfo',
       data: {
@@ -148,7 +168,7 @@ Page({
         country: userInfo.country,
         city: userInfo.city,
         gender: userInfo.gender,
-        openId: _that.openId
+        openId: openId
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -170,48 +190,33 @@ Page({
     })
   },
 
-  userInfoHandler(userInfo) {
-    console.log(userInfo)
-  },
-
-  bindFormSubmit: function (text) {
-    let _that = this;
-
+  bindFormSubmit(e) {
     const url = app.globalData.requestUrl['default'].url;
 
     let openId = wx.getStorageSync('openId');
-    if(openId == '') {
-      // 检测是否登录
-      wx.checkSession({
-        success: (res) => {
-          _that.wxLogin(url);
-        },
-        fail: (res) => {
-          _that.wxLogin(url);
-        }
-      });
-    }
 
-    const shout = text.detail.value.problem
-    
-    if(shout == '' && shout.trim() == '') {
-      wx.showToast({
-        title: '请输入您困惑的疑问吧',
-        icon: 'none',
-        duration: 2000
+    const problem = e.detail.value.problem;
+
+    if(openId != '' && openId != null) {
+      
+      if(problem == '' || problem == "") {
+        wx.showToast({
+          title: '请输入您困惑的疑问吧',
+          icon: 'none',
+          duration: 2000
+        })
+        return;
+      }
+
+      // 请求后端
+      this.getGrit(problem, url)
+
+      // 清空值
+      this.setData({
+        problem: ''
       })
-      return;
     }
-
-    // 到时候需要存储到数据库
-    const problem = text.detail.value.problem
-    // 请求后端
-    this.getGrit(problem, url)
-
-    // 清空值
-    this.setData({
-      problem: ''
-    })
+    
   },
 
   getGrit(problem, url) {

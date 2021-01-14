@@ -60,7 +60,7 @@ Page({
   saveUserInfo: function (userInfo) {
     let _that = this
     if(this.data.openId == '') {
-      var openId = wx.getStorageSync('openId')
+      let openId = wx.getStorageSync('openId')
       _that.setData({
         openId: openId
       })

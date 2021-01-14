@@ -17,33 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    // 查看是否授权
-    wx.getSetting({
-      success (res){
-        console.log(res)
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function(res) {
-              console.log(res)
-              console.log(res.userInfo)
-            },fail(res) {
-              console.log(res)
-            }
-          })
-        }
-      }
-    })
     
-    wx.getUserInfo({
-      success: (data) => {
-        console.log(data)
-        this.setData({
-          userInfo: data.userInfo
-        })
-      }
-    })
   },
 
   /**
@@ -57,7 +31,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let _that = this;
+    wx.getUserInfo({
+      success: function(res) {
+        _that.setData({
+          userInfo: res.userInfo
+        })
+      }
+    })
   },
 
   /**
@@ -95,10 +76,146 @@ Page({
 
   },
 
-  getTop10() {
-    wx.navigateTo({
-      url: '/pages/components/shout/shout'
+  userInfoHandler(userInfo) {
+    const url = app.globalData.requestUrl['default'].url;
+    let _that = this;
+
+    if(userInfo.detail.userInfo == '' || userInfo.detail.userInfo == null || userInfo.detail.userInfo == undefined) {
+      
+    } else {
+      let data = userInfo.detail.userInfo;
+      _that.setData({
+        userInfo: data
+      })
+
+      // 拿到授权，获取openId
+      wx.checkSession({
+        success: (res) => {
+          // 判断是否存在openId 如果不存在需要再去拿一次
+          wx.getStorage({
+            key: 'openId',
+            success (res) {
+              if(res.data == '') {
+                _that.wxLogin(url)
+              }
+            }
+          });
+        },
+        fail: (res) => {
+          _that.wxLogin(url)
+        }
+      })
+
+      _that.saveUserInfo(data);
+
+    }
+  },
+
+  // 微信登录
+  wxLogin: function (url) {
+    let _that = this;
+
+    wx.login({
+      success: (data) => {
+        // 获取到code
+        const code = data.code;
+        // 请求后端获取一下openId
+        _that.getWxOpenId(url, code)
+      },
+      fail: (data) => {
+        _that.showText('登录失败，请关闭小程序从新登录')
+      }
     })
+  },
+
+  // 获取OpenId
+  getWxOpenId: function(url, code) {
+    let _that = this;
+
+    wx.request({
+      url: url + 'getOpenId',
+      data: {
+        code: code
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      timeout: 2000,
+      method: "POST",
+      success: (data) => {
+        if(data.data.success) {
+          // 为了以后，顺便缓存一份
+          wx.setStorage({
+            key: "openId",
+            data: data.data.openId
+          })
+        } else {
+          _that.showText('登录失败，请关闭小程序从新登录')
+        }
+      },
+      fail: (data) => {
+        _that.showText('亲，请检查一下网络哦~~~')
+      }
+    })
+  },
+
+  saveUserInfo: function (userInfo) {
+    let openId = wx.getStorageSync('openId');
+
+    // 请求后端进行存储数据
+    const url = app.globalData.requestUrl['default'].url;
+    wx.request({
+      url: url + 'saveWxUserInfo',
+      data: {
+        img: userInfo.avatarUrl,
+        nickName: userInfo.nickName,
+        province: userInfo.province,
+        country: userInfo.country,
+        city: userInfo.city,
+        gender: userInfo.gender,
+        openId: openId
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      timeout: 2000,
+      method: "POST",
+      success: (data) => {
+        return true;
+      }
+    });
+  },
+  
+  // 输出text
+  showText: function (title) {
+    wx.showToast({
+      title: title,
+      icon: 'none',
+      duration: 1500
+    })
+  },
+
+  // 检测是否登录
+  checkLogin() {
+    let openId = wx.getStorageSync('openId')
+    if(openId == null || openId == '') {
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+      return null;
+    }
+    return openId;
+  },
+
+  getTop10() {
+    const openId = this.checkLogin();
+    if(openId) {
+      wx.navigateTo({
+        url: '/pages/components/shout/shout'
+      });
+    }
   },
    
   //确认
@@ -171,18 +288,27 @@ Page({
   },
 
   getMyGit() {
-    wx.navigateTo({
-      url: '/pages/components/grit/grit'
-    })
+
+    const openId = this.checkLogin();
+    if(openId) {
+      wx.navigateTo({
+        url: '/pages/components/grit/grit'
+      })
+    }
   },
 
   showModal(e) {
-    this.setData({
-      text: ''
-    })
-    this.setData({
-      modalName: e.currentTarget.dataset.target
-    })
+    const openId = this.checkLogin();
+
+    if(openId) {
+      this.setData({
+        text: ''
+      })
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    }
+    
   },
   hideModal(e) {
     this.setData({

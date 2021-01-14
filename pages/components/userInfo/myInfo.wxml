@@ -1,9 +1,14 @@
 <!--pages/components/userInfo/myInfo.wxml-->
 <scroll-view scroll-y class="scrollPage">
   <view class="UCenter-bg">
-    <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix"></image>
-    <view class="margin-top-sm">
+    <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix" wx:if="{{userInfo.avatarUrl != null}}"></image>
+    <view class="margin-top-sm" wx:if="{{userInfo.nickName != null}}">
       <text>{{userInfo.nickName}}</text>
+    </view>
+    <view class="grid col-7 padding-sm" wx:if="{{userInfo.nickName == null}}">
+      <view class="margin-tb-sm text-center">
+        <button class="cu-btn round" :class="bg-orange" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">点击登录</button>
+      </view>
     </view>
     <image src="/static/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
