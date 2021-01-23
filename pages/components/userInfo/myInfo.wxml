@@ -18,20 +18,20 @@
     <view class="cu-item arrow">
       <view class="content" bindtap="getTop10">
         <text class="cuIcon-card text-green"></text>
-        <text class="text-grey" bindtap="getTop10">查看最近询问记录</text>
+        <text class="text-grey">查看最近询问记录</text>
       </view>
     </view>
     <view class="cu-item arrow">
       <view class="content" bindtap="showModal" data-target="DialogModal1">
         <text class="cuIcon-appreciatefill text-red"></text>
         <!-- createGrit -->
-        <text class="text-grey" bindtap="showModal" data-target="DialogModal1">创建提示</text>
+        <text class="text-grey" bindtap="showModal">创建提示</text>
       </view>
     </view>
     <view class="cu-item arrow">
       <view class="content" bindtap="getMyGit">
         <text class="cuIcon-my text-orange"></text>
-        <text class="text-grey" bindtap="getMyGit">查看我贡献的提示</text>
+        <text class="text-grey">查看我贡献的提示</text>
       </view>
     </view>
     <view class="cu-item">

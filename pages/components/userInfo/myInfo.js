@@ -258,9 +258,9 @@ Page({
         if(!data.data.success) {
           // 告诉他错误
           wx.showToast({
-            title: '添加失败，可能重复',
+            title: data.data.errorInfo,
             icon: 'none',
-            duration: 2000
+            duration: 2500
           })
         } else {
           _that.hideModal()
@@ -270,14 +270,10 @@ Page({
           wx.showToast({
             title: '添加成功，请等待审核',
             icon: 'none',
-            duration: 2000
+            duration: 2500
           })
         }
       }
-    })
-
-    this.setData({
-      modalName: null
     })
   },
 

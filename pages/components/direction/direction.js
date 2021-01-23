@@ -233,12 +233,20 @@ Page({
       timeout: 2000,
       method: "POST",
       success: (data) => {
-        let text = data.data.grit.text;
-        wx.showToast({
-          title: '提示: ' + text,
-          icon: 'none',
-          duration: 2000
-        })
+        if(!data.data.success) {
+          wx.showToast({
+            title: '提示: ' + data.data.errorInfo,
+            icon: 'none',
+            duration: 2500
+          })
+        } else {
+          let text = data.data.grit.text;
+          wx.showToast({
+            title: '提示: ' + text,
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     })
   }
